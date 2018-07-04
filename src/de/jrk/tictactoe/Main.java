@@ -11,26 +11,34 @@ import de.jrk.tictactoe.players.NeuralNetworkPlayer;
 public class Main {
 	public static void main(String[] args) {
 		if (args.length > 0 && args[0].equals("train")) {
-			new Training().train();
+			train();
 		} else if (args.length > 1 && args[0].equals("play")) {
-			TicTacToe ticTacToe = new TicTacToe();
-			ticTacToe.setPlayer1(new ConsolePlayer());
 			try {
 				BufferedReader br = new BufferedReader(new FileReader(new File(args[1])));
 				for (int i = 0; i < Integer.parseInt(args[2]) - 1; i++) {
 					br.readLine();
 				}
-				ticTacToe.setPlayer2(new NeuralNetworkPlayer(NeuralNetwork.fromString(br.readLine())));
+				play(br.readLine());
 				br.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 				printUsage();
 				System.exit(0);
 			}
-			ticTacToe.run();
 		} else {
 			printUsage();
 		}
+	}
+	
+	public static void train() {
+		new Training().train();
+	}
+	
+	public static void play(String networkString) {
+		TicTacToe ticTacToe = new TicTacToe();
+		ticTacToe.setPlayer1(new ConsolePlayer());
+		ticTacToe.setPlayer2(new NeuralNetworkPlayer(NeuralNetwork.fromString(networkString)));
+		ticTacToe.run();
 	}
 
 	public static void printUsage() {
