@@ -98,6 +98,7 @@ public class Training {
 	 * Datei.
 	 */
 	private void saveBestNetworks() {
+		System.out.println("Saving to " + saveFile.getAbsolutePath());
 		try {
 			FileWriter fw = new FileWriter(saveFile);
 			String s = "";
